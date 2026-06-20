@@ -70,10 +70,23 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 }
 
 function Particle({ index }: { index: number }) {
-  const size = Math.random() * 4 + 2;
-  const left = Math.random() * 100;
-  const delay = Math.random() * 5;
-  const duration = Math.random() * 10 + 8;
+  // Simple pure deterministic pseudo-random generator
+  const seed = index + 1;
+  const rand = (s: number) => {
+    const x = Math.sin(s) * 10000;
+    return x - Math.floor(x);
+  };
+  const r1 = rand(seed * 1.5);
+  const r2 = rand(seed * 2.5);
+  const r3 = rand(seed * 3.5);
+  const r4 = rand(seed * 4.5);
+  const r5 = rand(seed * 5.5);
+
+  const size = r1 * 4 + 2;
+  const left = r2 * 100;
+  const delay = r3 * 5;
+  const duration = r4 * 10 + 8;
+  const top = r5 * 100;
 
   return (
     <div
@@ -84,7 +97,7 @@ function Particle({ index }: { index: number }) {
         background: index % 3 === 0 ? '#10b981' : index % 3 === 1 ? '#34d399' : '#3b82f6',
         borderRadius: '50%',
         left: `${left}%`,
-        top: `${Math.random() * 100}%`,
+        top: `${top}%`,
         opacity: 0.3,
         animation: `float ${duration}s ease-in-out ${delay}s infinite`,
       }}

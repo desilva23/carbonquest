@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { Leaf, Sun, Cloud, TreePine, CloudRain, Flame } from 'lucide-react';
+import { Sun, Cloud } from 'lucide-react';
 
 interface EcoWorldProps {
   score: number; // 0 to 100

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       kgCO2,
       xpEarned,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Calculation API error:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }

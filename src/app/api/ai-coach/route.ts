@@ -52,7 +52,7 @@ export async function POST(req: Request) {
           content: 'pong',
           isConfigured: true
         });
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('API key verification failed:', err);
         return NextResponse.json({
           content: 'NO_API_KEY_CONFIGURED',
@@ -65,9 +65,9 @@ export async function POST(req: Request) {
       apiKey: apiKeyToUse,
     });
 
-    const messages = [
+    const messages: Groq.Chat.ChatCompletionMessageParam[] = [
       { role: 'system', content: SYSTEM_PROMPT },
-      ...chatHistory.slice(-6).map((msg: any) => ({
+      ...chatHistory.slice(-6).map((msg: { role: 'user' | 'assistant'; content: string }) => ({
         role: msg.role,
         content: msg.content,
       })),
@@ -89,7 +89,7 @@ User message: ${message}`,
     ];
 
     const chatCompletion = await groq.chat.completions.create({
-      messages: messages as any,
+      messages,
       model: 'llama-3.3-70b-versatile',
       temperature: 0.7,
       max_tokens: 500,
@@ -98,7 +98,7 @@ User message: ${message}`,
     const reply = chatCompletion.choices[0]?.message?.content || "I'm having trouble analyzing the data right now. Keep up the green work!";
 
     return NextResponse.json({ content: reply });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error in AI Coach API:', error);
     return NextResponse.json(
       { content: "I'm experiencing some traffic, but here is a quick tip: unplugging household chargers when not in use stops standby power consumption, saving about 0.1 kg of CO2 daily!" },
