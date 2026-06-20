@@ -41,9 +41,13 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="theme-color" content="#020617" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       </head>
       <body>
+        {/* Skip to main content — WCAG 2.4.1 Bypass Blocks */}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Toaster
           position="top-center"
           toastOptions={{
@@ -63,8 +67,11 @@ export default function RootLayout({
             },
           }}
         />
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   );
 }
+
